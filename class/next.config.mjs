@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `http://localhost:8080/:path*`, // ngrok URL로 변경하세요
+        destination: `http://localhost/GRCP_Backend/api/:path*`, // ngrok URL로 변경하세요
       },
     ];
   },

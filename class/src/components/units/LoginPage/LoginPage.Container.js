@@ -19,26 +19,26 @@ export default function LoginPageLogic(){
 
     const onClickSubmit = async () => {
         try {
-            const response = await axios.post("/api/public/member/login/local", {
-              memberId,
-              password,
+            const response = await axios.post("/api/auth.php", {
+              userid:memberId,
+              password:password,
             });
-      
+
             login(
-              // login 결과물 (토큰 제외)
               {
                 memberId,
-                nickname: response.data.user.name,
+                nickname: response.data.data.user.name,
               },
-              response.data.token,
+              response.data.data.token,
             );
       
-            router.push("/");
+            router.push("/home");
           } catch (error) {
             setError("로그인 실패! 아이디와 비밀번호를 확인하세요.");
+            console.error(error);
           } finally{
             //개발용
-            router.push("/home")
+            // router.push("/home")
           }
         };
 

@@ -49,6 +49,10 @@ export function AuthProvider({ children }) {
 
   // 로그인 함수
   const login = (userData, accessToken) => {
+
+    console.log(userData);
+    console.log(accessToken);
+
     setUser(userData);
     setToken(accessToken);
     
