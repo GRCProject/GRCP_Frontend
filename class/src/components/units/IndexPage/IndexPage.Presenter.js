@@ -1,6 +1,6 @@
 import { IndexPage__Container, IndexPage__Header, IndexPage__LoginButton, IndexPage__Section, IndexPage__Section__Text } from "./IndexPage.Styles";
 
-export default function IndexPageUI(){
+export default function IndexPageUI(props){
 
     return(
         <IndexPage__Container>
@@ -15,7 +15,9 @@ export default function IndexPageUI(){
                     모든 것이 한 눈에
                     </IndexPage__Section__Text>
                 <div style={{height:"40px"}}></div>
-                <IndexPage__LoginButton>시작하기 &gt;</IndexPage__LoginButton>
+                <IndexPage__LoginButton
+                    onClick={() => {props.onClickHome();}}
+                >시작하기 &gt;</IndexPage__LoginButton>
             </IndexPage__Section>
         </IndexPage__Container>
     )
