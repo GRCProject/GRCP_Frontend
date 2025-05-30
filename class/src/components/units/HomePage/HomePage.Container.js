@@ -1,20 +1,38 @@
 import { useAuth } from "@/utils/AuthContext";
 import HomePageUI from "./HomePage.Presenter";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { createTeam, getAllTeams } from "@/utils/TeamManager";
 
 export default function HomePageLogic(){
-    const {token} = useAuth();
+    const {token, user, loading, isAuthenticated} = useAuth();
     const router = useRouter();
 
+
+    //프로필 이미지 경로
+    const [profileImage, setProfileImage] = useState("/Image/default-avatar.png")
+    //유저 이름
+    const [userName, setUserName] = useState("");
+    
+
     useEffect(() => {
-        // if(!token){
-        //     alert("잘못된 접근입니다!");
-        //     router.push("/");
-        // }
-    },[token])
+        // 로딩이 완료되고 인증되지 않은 경우에만 리다이렉트
+        if (!loading && !isAuthenticated) {
+            alert("잘못된 접근입니다!");
+            router.push("/login");
+        }
+        if(isAuthenticated){
+            console.log(user);
+            setProfileImage(user.profile_image);
+            setUserName(user.name);
+        }
+    }, [isAuthenticated, loading, router,user]);
+
 
     return(
-        <HomePageUI></HomePageUI>
+        <HomePageUI
+            profileImage = {profileImage}
+            userName = {userName}
+        ></HomePageUI>
     )
 }

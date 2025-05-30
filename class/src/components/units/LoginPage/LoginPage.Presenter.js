@@ -13,6 +13,7 @@ export default function LoginPageUI(props){
             <LoginPage__Container__Subtitle>비밀번호</LoginPage__Container__Subtitle>
             <LoginPage__Container__Input
                 onChange={props.onChangePassword}
+                type="password"
             ></LoginPage__Container__Input>
             {props.error &&
             <LoginPage__Container__ErrorMsg>

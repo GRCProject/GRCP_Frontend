@@ -23,11 +23,13 @@ export default function LoginPageLogic(){
               userid:memberId,
               password:password,
             });
-
+            
             login(
               {
                 memberId,
-                nickname: response.data.data.user.name,
+                name: response.data.data.user.name,
+                email:response.data.data.user.email,
+                profile_image:response.data.data.user.profile_image,
               },
               response.data.data.token,
             );
