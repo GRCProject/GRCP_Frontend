@@ -1,7 +1,7 @@
 import CreateModalLogic from "@/components/commons/CreateModal/CreateModal.Container";
-import { TeamPage__Button, TeamPage__Container, TeamPage__Header, TeamPage__Header__Left__Menu, TeamPage__Header__Right__User, TeamPage__Header_Left, TeamPage__Header_Right, TeamPage__Input, TeamPage__PersonalSchedule__BottomMenu__Container, TeamPage__PersonalSchedule__BottomMenu__Menu, TeamPage__PersonalSchedule__Container, TeamPage__Section, TeamPage__Section__PersonalSchedule__Container, TeamPage__Section__PersonalSchedule__Header, TeamPage__Section__PersonalSchedule__Left, TeamPage__Section__PersonalSchedule__Left__Describe, TeamPage__Section__PersonalSchedule__Left__Describe__Name, TeamPage__Section__PersonalSchedule__Left__Describe__Role, TeamPage__Section__PersonalSchedule__Left__Img, TeamPage__Section__PersonalSchedule__Section, TeamPage__Section__PersonalSchedule__Wrapper, TeamPage__Section__TeamSchedule__Container, TeamPage__Section__TeamSchedule__Container__NS, TeamPage__Section__TeamSchedule__Describe, TeamPage__Section__TeamSchedule__Left, TeamPage__Section__TeamSchedule__Wrapper, TeamPage__Section__Title, TeamPage__SubmitButton, TeamPage__Wrapper } from "./TeamPage.Styles";
+import { TeamPage__Button, TeamPage__Container, TeamPage__Header, TeamPage__Header__Left__Menu, TeamPage__Header__Right__User, TeamPage__Header_Left, TeamPage__Header_Right, TeamPage__Input, TeamPage__PersonalSchedule__BottomMenu__Container, TeamPage__PersonalSchedule__BottomMenu__Menu, TeamPage__PersonalSchedule__Container, TeamPage__Section, TeamPage__Section__PersonalSchedule__Container, TeamPage__Section__PersonalSchedule__Header, TeamPage__Section__PersonalSchedule__Left, TeamPage__Section__PersonalSchedule__Left__Describe, TeamPage__Section__PersonalSchedule__Left__Describe__Name, TeamPage__Section__PersonalSchedule__Left__Describe__Role, TeamPage__Section__PersonalSchedule__Left__Img, TeamPage__Section__PersonalSchedule__Section, TeamPage__Section__PersonalSchedule__Section__TeamSc, TeamPage__Section__PersonalSchedule__Section_detailSc, TeamPage__Section__PersonalSchedule__Wrapper, TeamPage__Section__TeamSchedule__Button, TeamPage__Section__TeamSchedule__Container, TeamPage__Section__TeamSchedule__Container__NS, TeamPage__Section__TeamSchedule__Describe, TeamPage__Section__TeamSchedule__Describe__Date, TeamPage__Section__TeamSchedule__Left, TeamPage__Section__TeamSchedule__Wrapper, TeamPage__Section__Title, TeamPage__SubmitButton, TeamPage__Wrapper } from "./TeamPage.Styles";
 import SideMenuLogic from "@/components/commons/SideMenu/SideMenu.Container";
-import { MenuIcon, UserIcon, VerticalDots } from "@/utils/SvgProvider";
+import { MenuIcon, ScheduleIcon, UserIcon, VerticalDots } from "@/utils/SvgProvider";
 import { useState } from "react";
 import BottomMenuLogic from "@/components/commons/BottomMenu/BottomMenu.Container";
 
@@ -33,6 +33,12 @@ export default function TeamPageUI(props){
             isModalOpen={isDBMOpen}
         >
             <TeamPage__PersonalSchedule__BottomMenu__Container>
+                <TeamPage__PersonalSchedule__BottomMenu__Menu>
+                    팀 일정 삭제
+                </TeamPage__PersonalSchedule__BottomMenu__Menu>
+                <TeamPage__PersonalSchedule__BottomMenu__Menu>
+                    팀 일정 수정
+                </TeamPage__PersonalSchedule__BottomMenu__Menu>
                 <TeamPage__PersonalSchedule__BottomMenu__Menu
                     onClick={() => {
                         setIsDBMOpen(false);
@@ -40,13 +46,7 @@ export default function TeamPageUI(props){
                     }}
                 >
                     세부 일정 생성
-                </TeamPage__PersonalSchedule__BottomMenu__Menu>
-                <TeamPage__PersonalSchedule__BottomMenu__Menu>
-                    세부 일정 수정
-                </TeamPage__PersonalSchedule__BottomMenu__Menu>
-                <TeamPage__PersonalSchedule__BottomMenu__Menu>
-                    세부 일정 삭제
-                </TeamPage__PersonalSchedule__BottomMenu__Menu>
+                </TeamPage__PersonalSchedule__BottomMenu__Menu>             
             </TeamPage__PersonalSchedule__BottomMenu__Container>
         </BottomMenuLogic>
         {/* 팀 일정 생성 모달 */}
@@ -117,13 +117,7 @@ export default function TeamPageUI(props){
                     <img src = "/Image/Logo.png" alt="Logo.png"/>
                 </TeamPage__Header_Left>
                 <TeamPage__Header_Right>
-                    <TeamPage__Button
-                    style={{width:"150px"}}
-                    onClick={() => {
-                        setIsCSModalOpen(true);
-                    }}
-                    >일정 생성</TeamPage__Button>
-                    <TeamPage__Header__Right__User><UserIcon></UserIcon> </TeamPage__Header__Right__User>
+                    <TeamPage__Header__Right__User><VerticalDots></VerticalDots></TeamPage__Header__Right__User>
                 </TeamPage__Header_Right>
             </TeamPage__Header>
             <TeamPage__Section>
@@ -132,11 +126,7 @@ export default function TeamPageUI(props){
                     {(props.teamScheduleArr?.length ===0)?
                     // 팀 일정이 없는 경우
                     <TeamPage__Section__TeamSchedule__Container__NS>팀 일정이 없습니다.
-                        <TeamPage__Button
-                        onClick={() => {
-                            setIsCSModalOpen(true);
-                        }}
-                    >팀 일정 생성하기</TeamPage__Button> </TeamPage__Section__TeamSchedule__Container__NS>
+                    </TeamPage__Section__TeamSchedule__Container__NS>
                     :
                     props.teamScheduleArr?.map((data,index) => (
                     <TeamPage__Section__TeamSchedule__Container>
@@ -146,9 +136,7 @@ export default function TeamPageUI(props){
                             ></TeamPage__Section__PersonalSchedule__Left__Img>
                             <TeamPage__Section__TeamSchedule__Describe>
                                 <div>{data.schedule_name}</div>
-                                <div
-                                    style={{color:"#767676"}}
-                                >{data.start_date} ~ {data.end_date}</div>
+                                <TeamPage__Section__TeamSchedule__Describe__Date><ScheduleIcon></ScheduleIcon> {data.start_date} - {data.end_date}</TeamPage__Section__TeamSchedule__Describe__Date>
                             </TeamPage__Section__TeamSchedule__Describe>
                         </TeamPage__Section__TeamSchedule__Left>
                         <TeamPage__Header__Left__Menu
@@ -161,6 +149,13 @@ export default function TeamPageUI(props){
                         </TeamPage__Header__Left__Menu>
                     </TeamPage__Section__TeamSchedule__Container>
                 ))}
+                    <TeamPage__Section__TeamSchedule__Button
+                        onClick={() => {
+                            setIsCSModalOpen(true);
+                        }}
+                        >
+                        새 일정 생성하기
+                    </TeamPage__Section__TeamSchedule__Button>
                 </TeamPage__Section__TeamSchedule__Wrapper>
                 {props.teamScheduleArr?.length !== 0 &&
                 <>
@@ -204,16 +199,60 @@ export default function TeamPageUI(props){
                                 {
                                     (() => {
                                         const curMemArr = props.personalScheduleArr?.filter((e) => e.assignee_id === data.id);
-                                    return(
-                                        curMemArr.map((data,index)=>{
+                                        const groupedSchedule = curMemArr?.reduce((acc, item) => {
+                                            const existingGroup = acc.find(group => group.team_schedule_id === item.team_schedule_id);
 
-                                            return(
-                                            <TeamPage__PersonalSchedule__Container>
-                                                <div>{data.team_schedule_name}</div>
-                                                <div>{data.detail_name}</div>
-                                                <div>{data.detail_status}</div>
-                                            </TeamPage__PersonalSchedule__Container>);
-                                    })
+                                            if(existingGroup){
+                                                existingGroup.details.push({
+                                                    personal_schedule_id: item.personal_schedule_id,
+                                                    detail_name:item.detail_name,
+                                                    detail_status:item.detail_status,
+                                                    sort_order:item.sort_order
+                                                })
+                                            }else{
+                                                acc.push({
+                                                    team_schedule_id: item.team_schedule_id,
+                                                    team_schedule_name: item.team_schedule_name,
+                                                    team_start_date: item.team_start_date,
+                                                    team_end_date: item.team_end_date,
+                                                    team_status: item.team_status,
+                                                    team_id: item.team_id,
+                                                    team_name: item.team_name,
+                                                    position: item.position,
+                                                    role: item.role,
+                                                    assignee_name: item.assignee_name,
+                                                    assignee_id: item.assignee_id,
+                                                    team_member_id: item.team_member_id,
+                                                    created_at:item.created_at,
+                                                    details: [{
+                                                        personal_schedule_id: item.personal_schedule_id,
+                                                        detail_name: item.detail_name,
+                                                        detail_status: item.detail_status,
+                                                        sort_order: item.sort_order
+                                                    }]
+                                                })
+                                            }
+
+                                            return acc;
+                                        },[])
+
+                                        console.log(groupedSchedule);
+                                    return(
+                                        groupedSchedule.map((data,index)=>(
+                                            <>
+                                            <TeamPage__Section__PersonalSchedule__Section__TeamSc>
+                                                {data.team_schedule_name}
+                                                <TeamPage__Section__TeamSchedule__Describe__Date>
+                                                    <ScheduleIcon></ScheduleIcon> {data.team_start_date} - {data.team_end_date}
+                                                </TeamPage__Section__TeamSchedule__Describe__Date>
+                                            </TeamPage__Section__PersonalSchedule__Section__TeamSc>                                            
+                                            {data.details.map((d,i) => (
+                                                <TeamPage__Section__PersonalSchedule__Section_detailSc>
+                                                    <>• {d.detail_name} ({d.detail_status})</>
+                                                {(data.assignee_id === props.userId)&& <TeamPage__Header__Left__Menu><VerticalDots></VerticalDots></TeamPage__Header__Left__Menu>}
+                                                </TeamPage__Section__PersonalSchedule__Section_detailSc>                                                                                        ))}
+                                            </>
+                                        ))
                                     );
                                 })()
                                 }

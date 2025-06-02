@@ -2,7 +2,7 @@ import { useAuth } from "@/utils/AuthContext";
 import HomePageUI from "./HomePage.Presenter";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { createTeam, getAllTeams } from "@/utils/TeamManager";
+import { getHierarchicalSchedules } from "@/utils/ScheduleManager";
 
 export default function HomePageLogic(){
     const {token, user, loading, isAuthenticated, logout} = useAuth();
@@ -13,16 +13,18 @@ export default function HomePageLogic(){
     const [profileImage, setProfileImage] = useState("/Image/default-avatar.png")
     //유저 이름
     const [userName, setUserName] = useState("");
+    //스케쥴 배열
+    const [scheduleArr, setScheduleArr] = useState([]);
     
 
     useEffect(() => {
         // 로딩이 완료되고 인증되지 않은 경우에만 리다이렉트
         if (!loading && !isAuthenticated) {
-            alert("잘못된 접근입니다!");
             router.push("/login");
         }
         if(isAuthenticated){
             console.log(user);
+            fetchMySchedule();
             setProfileImage(user.profile_image);
             setUserName(user.name);
         }
@@ -30,6 +32,18 @@ export default function HomePageLogic(){
 
     const onClickLogout = () => {
         logout();
+        router.push("/");
+    }
+
+    const fetchMySchedule = () => {
+        try{
+            getHierarchicalSchedules(token).then((res) => {
+                console.log(res.data);
+                setScheduleArr(res.data.hierarchical_schedules);
+            })
+        }catch(error){
+
+        }
     }
 
     return(
@@ -37,6 +51,7 @@ export default function HomePageLogic(){
             profileImage = {profileImage}
             userName = {userName}
             onClickLogout = {onClickLogout}
+            scheduleArr = {scheduleArr}
         ></HomePageUI>
     )
 }

@@ -6,7 +6,7 @@ import { addTeamMember, createTeam,getAllTeams } from "@/utils/TeamManager";
 
 export default function SideMenuLogic(props){
     const router = useRouter();
-    const {token, isAuthenticated} = useAuth();
+    const {token, isAuthenticated,logout} = useAuth();
 
     //활성화된 탭
     const [activeTabArr, setActiveTabArr] = useState([]);
@@ -88,6 +88,11 @@ export default function SideMenuLogic(props){
         }
     }
 
+    const onClickLogout = () => {
+        logout();
+        router.push("/");
+    }
+
     return(
         <SideMenuUI
             isMenuOpen = {props.isMenuOpen}
@@ -101,6 +106,7 @@ export default function SideMenuLogic(props){
             onClickCreateTeam = {onClickCreateTeam}
             onClickInviteMember = {onClickInviteMember}
             onClickHome = {onClickHome}
+            onClickLogout = {onClickLogout}
             setTeamName = {setTeamName}
             setTeamEmail = {setTeamEmail}
             setTeamId = {setTeamId}

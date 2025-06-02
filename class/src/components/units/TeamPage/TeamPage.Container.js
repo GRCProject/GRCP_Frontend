@@ -123,7 +123,7 @@ export default function TeamPageLogic(){
     const onCreatePersonalSchedule = () => {
         try{
             createPersonalSchedule({team_schedules_id:curSchedule, user_id:user.id, detail_name:DSName}, token)
-            fetchHierarchSchedule();
+            location.reload();
         }catch(error){
             console.error(error);
         }

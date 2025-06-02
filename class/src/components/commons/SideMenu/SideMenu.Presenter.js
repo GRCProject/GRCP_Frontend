@@ -1,5 +1,5 @@
 import CreateModalLogic from "../CreateModal/CreateModal.Container"
-import { SideMenu__Container, SideMenu__Plus, SideMenu__Subtitle, SideMenu__Team__Container, SideMenu__Title, SideMenu__Title__SB, SideMenu__Wrapper,SideMenu__Team__Element, SideMenu__Team__Member, SideMenu__Team__AddTeam, SideMenu__Team_Name,SideMenu__Team__Wrapper, SideMenu__Team__Schedule, SideMenu__Team__name__Text,SideMenu__CreateModal__Button,SideMenu__CreateModal__Input } from "./SideMenu.Styles"
+import { SideMenu__Container, SideMenu__Plus, SideMenu__Subtitle, SideMenu__Team__Container, SideMenu__Title, SideMenu__Title__SB, SideMenu__Wrapper,SideMenu__Team__Element, SideMenu__Team__Member, SideMenu__Team__AddTeam, SideMenu__Team_Name,SideMenu__Team__Wrapper, SideMenu__Team__Schedule, SideMenu__Team__name__Text,SideMenu__CreateModal__Button,SideMenu__CreateModal__Input,SideMenu__Logout, SideMenu__Section, SideMenu__Footer } from "./SideMenu.Styles"
 import { PlusIcon,HomeIcon, VerticalDots, ScheduleIcon } from "@/utils/SvgProvider"
 import { useState } from "react";
 
@@ -55,6 +55,7 @@ export default function SideMenuUI(props){
                         isMenuOpen = {props.isMenuOpen}
                         onClick={(e) => {e.stopPropagation()}}
                     >
+                    <SideMenu__Section>
                         <img src="/Image/Logo.png" width={"120px"}/>
                         <div style={{width:"1px", height:"40px"}}></div>
                     <SideMenu__Title
@@ -127,7 +128,17 @@ export default function SideMenuUI(props){
                         }
                         </SideMenu__Team__Container>
                     ))}
-                    </SideMenu__Team__Wrapper>      
+                    </SideMenu__Team__Wrapper>
+                    </SideMenu__Section>
+                    <SideMenu__Footer>
+                        <SideMenu__Logout
+                            onClick={() => {
+                                props.onClickLogout();
+                            }}
+                        >
+                            로그아웃
+                        </SideMenu__Logout>
+                    </SideMenu__Footer>
                     </SideMenu__Container>
         </SideMenu__Wrapper>
         </>

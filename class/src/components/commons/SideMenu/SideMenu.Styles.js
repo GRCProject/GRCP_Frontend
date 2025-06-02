@@ -21,19 +21,25 @@ export const SideMenu__Wrapper = styled.div`
 `
 
 export const SideMenu__Container = styled.div`
-    width:40%;
+    width:50%;
     height:100%;
     padding: 20px 8px;
 
     background-color:white;
+
     display:flex;
     flex-direction:column;
-    align-items:center;
-    gap:8px;
+    justify-content:space-between;
 
     transform:${(props) => (props.isMenuOpen?"":"translateX(-120%)")};
     transition:700ms all ease-in-out;
     z-index:2;
+`
+
+export const SideMenu__Section = styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
 `
 
 export const SideMenu__Title = styled.div`
@@ -223,4 +229,28 @@ export const SideMenu__CreateModal__Button = styled.div`
     font-size:14px;
 
     cursor: pointer;
+`
+
+export const SideMenu__Footer = styled.div`
+    width:100%;
+`
+
+export const SideMenu__Logout = styled.div`
+    width:100%;
+    padding: 2px;
+    border: 1px solid #d9d9d9;
+    border-radius:8px;
+
+    font-size:16px;
+    color: #333333;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor: pointer;
+
+    &:hover{
+        background-color:#ececec;
+    }
 `

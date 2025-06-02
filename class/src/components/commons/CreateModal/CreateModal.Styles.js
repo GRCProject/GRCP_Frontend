@@ -32,6 +32,7 @@ export const CreateModal__Container = styled.div`
     align-items:center;
     gap:8px;
 
+    transform:translateY(-80%);
     transition:700ms all ease-in-out;
     z-index:2;
 `
