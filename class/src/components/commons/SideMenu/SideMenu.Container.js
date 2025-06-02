@@ -53,19 +53,19 @@ export default function SideMenuLogic(props){
             pathname:"team",
             query:{teamId:id}
         })
+        props.setIsMenuOpen(false);
     }
 
     const fetchAllTeam = () => {
             getAllTeams(token).then((res) =>{
                     setTeamArr(res.data.teams);
-                    console.log(res.data.teams);
+                    // console.log(res.data.teams);
                 })
         }
 
     //팀 생성 핸들러
     const onClickCreateTeam = () => {
         if(teamName && teamName !== ""){
-            console.log(1);
             try{
                 createTeam({team_name:teamName}, token);
                 fetchAllTeam();

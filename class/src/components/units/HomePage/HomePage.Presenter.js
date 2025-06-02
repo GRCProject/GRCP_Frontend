@@ -27,7 +27,11 @@ export default function HomePageUI(props){
                     <img src="/Image/Logo.png"/>
                 </HomePage__Header_Left>
                 <HomePage__Header_Right>
-                    <HomePage__Header__Right__User><UserIcon></UserIcon></HomePage__Header__Right__User>
+                    <HomePage__Header__Right__User
+                        onClick={() => {
+                            props.onClickLogout();
+                        }}
+                    ><UserIcon></UserIcon></HomePage__Header__Right__User>
                 </HomePage__Header_Right>
             </HomePage__Header>
             <HomePage__Section>

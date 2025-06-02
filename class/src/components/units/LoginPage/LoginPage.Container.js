@@ -27,6 +27,7 @@ export default function LoginPageLogic(){
             login(
               {
                 memberId,
+                id:response.data.data.user.id,
                 name: response.data.data.user.name,
                 email:response.data.data.user.email,
                 profile_image:response.data.data.user.profile_image,

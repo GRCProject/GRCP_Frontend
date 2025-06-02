@@ -121,6 +121,7 @@ export const deleteTeamSchedule = async(scheduleId, token) => {
 // ======================
 
 // 개인 스케줄(세부 작업) 생성
+//personalData{team_schedules_id, team_member_id,}
 export const createPersonalSchedule = async(personalData, token) => {
     try {
         const response = await axios.post("/api/schedule.php", {

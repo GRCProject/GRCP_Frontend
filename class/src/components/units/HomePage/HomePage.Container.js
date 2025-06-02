@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { createTeam, getAllTeams } from "@/utils/TeamManager";
 
 export default function HomePageLogic(){
-    const {token, user, loading, isAuthenticated} = useAuth();
+    const {token, user, loading, isAuthenticated, logout} = useAuth();
     const router = useRouter();
 
 
@@ -28,11 +28,15 @@ export default function HomePageLogic(){
         }
     }, [isAuthenticated, loading, router,user]);
 
+    const onClickLogout = () => {
+        logout();
+    }
 
     return(
         <HomePageUI
             profileImage = {profileImage}
             userName = {userName}
+            onClickLogout = {onClickLogout}
         ></HomePageUI>
     )
 }

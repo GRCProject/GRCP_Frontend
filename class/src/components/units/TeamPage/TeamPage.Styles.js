@@ -73,11 +73,15 @@ export const TeamPage__Section__Title = styled.div`
 export const TeamPage__Section__TeamSchedule__Wrapper = styled.div`
     width:100%;
     min-height:100px;
+
+    display:flex;
+    flex-direction:column;
+    gap:8px;
 `
 
 export const TeamPage__Section__TeamSchedule__Container = styled.div`
     width:100%;
-    height:100px;
+    height:80px;
     padding:12px;
     
     border-radius:30px;
@@ -87,6 +91,22 @@ export const TeamPage__Section__TeamSchedule__Container = styled.div`
     display:flex;
     justify-content:space-between;
     align-items:center;
+`
+
+export const TeamPage__Section__TeamSchedule__Left = styled.div`
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+`
+
+export const TeamPage__Section__TeamSchedule__Describe = styled.div`
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:4px;
 `
 
 export const TeamPage__Section__TeamSchedule__Container__NS = styled.div`
@@ -156,11 +176,15 @@ export const TeamPage__SubmitButton = styled.div`
 export const TeamPage__Section__PersonalSchedule__Wrapper = styled.div`
     width:100%;
     min-height:100px;
+
+    display:flex;
+    flex-direction:column;
+    gap:8px;
 `
 
 export const TeamPage__Section__PersonalSchedule__Container = styled.div`
     width:100%;
-    height:100px;
+    min-height:80px;
     padding:12px;
     
     border-radius:30px;
@@ -168,8 +192,17 @@ export const TeamPage__Section__PersonalSchedule__Container = styled.div`
     background-color:white;
 
     display:flex;
+    flex-direction:column;
+`
+
+export const TeamPage__Section__PersonalSchedule__Header = styled.div`
+    height:100%;
+
+    display:flex;
     justify-content:space-between;
     align-items:center;
+
+    cursor: pointer;
 `
 
 export const TeamPage__Section__PersonalSchedule__Left = styled.div`
@@ -181,7 +214,7 @@ export const TeamPage__Section__PersonalSchedule__Left = styled.div`
 `
 
 export const TeamPage__Section__PersonalSchedule__Left__Img = styled.div`
-    height:100%;
+    height:56px;
     aspect-ratio:1/1;
     border-radius:50%;
 
@@ -205,4 +238,33 @@ export const TeamPage__Section__PersonalSchedule__Left__Describe__Name = styled.
 
 export const TeamPage__Section__PersonalSchedule__Left__Describe__Role = styled.div`
     color:#767676;
+`
+
+export const TeamPage__Section__PersonalSchedule__Section = styled.div`
+    display:flex;
+    flex-direction:column;
+`
+
+export const TeamPage__PersonalSchedule__BottomMenu__Container = styled.div`
+    width:100%;
+    padding: 20px 0 10px 0;
+
+    display:flex;
+    flex-direction:column;
+`
+
+export const TeamPage__PersonalSchedule__BottomMenu__Menu = styled.div`
+    width:100%;
+    padding: 8px;
+
+    border-top: 1px solid #d9d9d9;
+
+    display:flex;
+    justify-content:center;
+`
+
+export const TeamPage__PersonalSchedule__Container = styled.div`
+    width:100%;
+    display:flex;
+    
 `
