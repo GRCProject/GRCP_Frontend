@@ -58,7 +58,9 @@ export default function SideMenuLogic(props){
 
     const fetchAllTeam = () => {
             getAllTeams(token).then((res) =>{
+                    if(res.teams){
                     setTeamArr(res.data.teams);
+                    }
                     // console.log(res.data.teams);
                 })
         }
