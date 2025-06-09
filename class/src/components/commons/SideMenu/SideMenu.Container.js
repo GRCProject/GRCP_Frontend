@@ -69,6 +69,7 @@ export default function SideMenuLogic(props){
             try{
                 createTeam({team_name:teamName}, token);
                 fetchAllTeam();
+                location.reload();
             }catch(error){
                 console.error(error);
             }

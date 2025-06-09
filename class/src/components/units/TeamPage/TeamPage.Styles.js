@@ -1,4 +1,5 @@
 import styled from "@emotion/styled"
+import DatePicker from "react-datepicker"
 
 export const TeamPage__Wrapper = styled.div`
     width:100%;
@@ -317,3 +318,24 @@ export const TeamPage__PersonalSchedule__BottomMenu__Menu = styled.div`
     justify-content:center;
 `
 
+
+export const TeamPage__DatePickerWrapper = styled.div`
+    width: 100%;
+    
+    .react-datepicker-wrapper {
+        width: 100%;
+    }
+    
+    .react-datepicker__input-container {
+        width: 100%;
+    }
+    
+    .react-datepicker__input-container input {
+        width: 100%;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        padding: 5px 12px;
+        font-size: 14px;
+        line-height: 20px;
+    }
+`;

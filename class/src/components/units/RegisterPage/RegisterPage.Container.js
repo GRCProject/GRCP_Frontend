@@ -66,7 +66,7 @@ export default function RegisterPageLogic(){
             setError(newErrors.join("\n"));
             }
         }else{
-            setError("")
+            setError("비밀번호를 다시 확인해주세요.")
         }
     }
     return(

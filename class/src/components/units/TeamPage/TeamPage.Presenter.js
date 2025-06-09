@@ -1,9 +1,11 @@
 import CreateModalLogic from "@/components/commons/CreateModal/CreateModal.Container";
-import { TeamPage__Button, TeamPage__Container, TeamPage__Header, TeamPage__Header__Left__Menu, TeamPage__Header__Right__User, TeamPage__Header_Left, TeamPage__Header_Right, TeamPage__Input, TeamPage__PersonalSchedule__BottomMenu__Container, TeamPage__PersonalSchedule__BottomMenu__Menu, TeamPage__PersonalSchedule__Container, TeamPage__Section, TeamPage__Section__PersonalSchedule__Container, TeamPage__Section__PersonalSchedule__Header, TeamPage__Section__PersonalSchedule__Left, TeamPage__Section__PersonalSchedule__Left__Describe, TeamPage__Section__PersonalSchedule__Left__Describe__Name, TeamPage__Section__PersonalSchedule__Left__Describe__Role, TeamPage__Section__PersonalSchedule__Left__Img, TeamPage__Section__PersonalSchedule__Section, TeamPage__Section__PersonalSchedule__Section__TeamSc, TeamPage__Section__PersonalSchedule__Section_detailSc, TeamPage__Section__PersonalSchedule__Wrapper, TeamPage__Section__TeamSchedule__Button, TeamPage__Section__TeamSchedule__Container, TeamPage__Section__TeamSchedule__Container__NS, TeamPage__Section__TeamSchedule__Describe, TeamPage__Section__TeamSchedule__Describe__Date, TeamPage__Section__TeamSchedule__Left, TeamPage__Section__TeamSchedule__Wrapper, TeamPage__Section__Title, TeamPage__SubmitButton, TeamPage__Wrapper } from "./TeamPage.Styles";
+import { TeamPage__Button, TeamPage__Container, TeamPage__DatePicker, TeamPage__DatePickerWrapper, TeamPage__Header, TeamPage__Header__Left__Menu, TeamPage__Header__Right__User, TeamPage__Header_Left, TeamPage__Header_Right, TeamPage__Input, TeamPage__PersonalSchedule__BottomMenu__Container, TeamPage__PersonalSchedule__BottomMenu__Menu, TeamPage__PersonalSchedule__Container, TeamPage__Section, TeamPage__Section__PersonalSchedule__Container, TeamPage__Section__PersonalSchedule__Header, TeamPage__Section__PersonalSchedule__Left, TeamPage__Section__PersonalSchedule__Left__Describe, TeamPage__Section__PersonalSchedule__Left__Describe__Name, TeamPage__Section__PersonalSchedule__Left__Describe__Role, TeamPage__Section__PersonalSchedule__Left__Img, TeamPage__Section__PersonalSchedule__Section, TeamPage__Section__PersonalSchedule__Section__TeamSc, TeamPage__Section__PersonalSchedule__Section_detailSc, TeamPage__Section__PersonalSchedule__Wrapper, TeamPage__Section__TeamSchedule__Button, TeamPage__Section__TeamSchedule__Container, TeamPage__Section__TeamSchedule__Container__NS, TeamPage__Section__TeamSchedule__Describe, TeamPage__Section__TeamSchedule__Describe__Date, TeamPage__Section__TeamSchedule__Left, TeamPage__Section__TeamSchedule__Wrapper, TeamPage__Section__Title, TeamPage__SubmitButton, TeamPage__Wrapper } from "./TeamPage.Styles";
 import SideMenuLogic from "@/components/commons/SideMenu/SideMenu.Container";
 import { MenuIcon, ScheduleIcon, UserIcon, VerticalDots } from "@/utils/SvgProvider";
 import { useState } from "react";
 import BottomMenuLogic from "@/components/commons/BottomMenu/BottomMenu.Container";
+import DatePicker from "react-datepicker";
+
 
 export default function TeamPageUI(props){
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,6 +17,10 @@ export default function TeamPageUI(props){
     const [openMemberArr, setOpenMemberArr] = useState([]);
     //세부 일정 하단 메뉴
     const [isDBMOpen, setIsDBMOpen] = useState(false);
+    //세부 일정 관리 메뉴
+    const [isDBEOpen, setIsDBEOpen] = useState(false);
+    //세부 일정 수정 모달
+    const [isDBEModalOpen,setIsDBEModalOpen] = useState(false);
 
     const onClickMember = (id) => {
         if(!openMemberArr.includes(id)){
@@ -24,6 +30,8 @@ export default function TeamPageUI(props){
             setOpenMemberArr(newArr);
         }
     }
+
+   
     return(
     <>
     <TeamPage__Wrapper>
@@ -33,11 +41,13 @@ export default function TeamPageUI(props){
             isModalOpen={isDBMOpen}
         >
             <TeamPage__PersonalSchedule__BottomMenu__Container>
-                <TeamPage__PersonalSchedule__BottomMenu__Menu>
+                <TeamPage__PersonalSchedule__BottomMenu__Menu
+                    onClick={() => {
+                        setIsDBMOpen(false);
+                        props.onDeleteTeamSchedule();
+                    }}
+                >
                     팀 일정 삭제
-                </TeamPage__PersonalSchedule__BottomMenu__Menu>
-                <TeamPage__PersonalSchedule__BottomMenu__Menu>
-                    팀 일정 수정
                 </TeamPage__PersonalSchedule__BottomMenu__Menu>
                 <TeamPage__PersonalSchedule__BottomMenu__Menu
                     onClick={() => {
@@ -60,16 +70,24 @@ export default function TeamPageUI(props){
                 onChange={props.onChangeScheduleName}
                 value={props.scheduleName}
             ></TeamPage__Input>
-            <TeamPage__Input
-                placeholder="시작 날짜 (YYYY-MM-DD)"
-                onChange={props.onChangeStartDate}
-                value={props.startDate}
-            ></TeamPage__Input>
-            <TeamPage__Input
-                placeholder="종료 날짜 (YYYY-MM-DD)"
-                onChange={props.onChangeEndDate}
-                value={props.endDate}
-            ></TeamPage__Input>
+            <TeamPage__DatePickerWrapper>
+                <DatePicker
+                placeholderText="시작 날짜"
+                onChange={(date) => props.onChangeStartDate(date)}
+                selected={props.startDate}
+                dateFormat="yyyy-MM-dd"
+            >
+                </DatePicker>
+            </TeamPage__DatePickerWrapper>
+            <TeamPage__DatePickerWrapper>
+                <DatePicker
+                    placeholderText="종료 날짜"
+                    onChange={(date) => props.onChangeEndDate(date)}
+                    selected={props.endDate}
+                    dateFormat="yyyy-MM-dd"
+                >
+                </DatePicker>
+            </TeamPage__DatePickerWrapper>
             <TeamPage__SubmitButton
                 onClick={() => {
                     props.onCreateTeamSchedule();
@@ -85,7 +103,6 @@ export default function TeamPageUI(props){
             isModalOpen={isDSModalOpen}
         >
                 <div>세부 일정 생성</div>
-                <div>{props.curSchedule}</div>
             <TeamPage__Input
                 placeholder="일정 이름"
                 onChange={props.onChangeDSName}
@@ -97,7 +114,66 @@ export default function TeamPageUI(props){
                     setIsDSModalOpen(false);
                 }}
             >
-                세부 일정 생성
+                생성하기
+            </TeamPage__SubmitButton>
+        </CreateModalLogic>
+        {/* 세부 일정 관리 모달 */}
+        <BottomMenuLogic
+                setIsModalOpen={setIsDBEOpen}
+                isModalOpen={isDBEOpen}
+            >
+                <TeamPage__PersonalSchedule__BottomMenu__Container>
+                    <TeamPage__PersonalSchedule__BottomMenu__Menu
+                        onClick={() => {
+                            props.onDeletePersonalSchedule();
+                            setIsDBEOpen(false);
+                        }}
+                    >
+                        세부 일정 삭제
+                    </TeamPage__PersonalSchedule__BottomMenu__Menu>
+                    <TeamPage__PersonalSchedule__BottomMenu__Menu
+                        onClick = {() => {
+                            setIsDBEOpen(false);
+                            setIsDBEModalOpen(true);
+                        }}
+                    >
+                        세부 일정 수정
+                    </TeamPage__PersonalSchedule__BottomMenu__Menu>            
+                </TeamPage__PersonalSchedule__BottomMenu__Container>
+        </BottomMenuLogic>
+        {/* 세부 일정 수정 모달 */}
+        <CreateModalLogic
+            setIsModalOpen={setIsDBEModalOpen}
+            isModalOpen={isDBEModalOpen}
+        >
+            <div>
+                세부 일정 수정
+            </div>
+            <TeamPage__Input
+                placeholder="변경할 일정 이름"
+                onChange={props.onChangeChangedPName}
+                value = {props.changedPName}
+            >
+            </TeamPage__Input>
+            <select
+                style={{
+                    width:"100%",
+                    border: "1px solid #d9d9d9",
+                    borderRadius: "4px",
+                    padding: "5px 12px",
+                    fontSize: "14px",
+                    lineHeight: "20px"
+                }}
+                onChange={props.onChangeChangedPState}
+            >
+                <option value="미완료">미완료</option>
+                <option value="진행중">진행중</option>
+                <option value="완료">완료</option>
+            </select>
+            <TeamPage__SubmitButton
+                onClick={() => {props.onUpdatePersonalSchedule()}}
+            >
+                변경하기
             </TeamPage__SubmitButton>
         </CreateModalLogic>
         <SideMenuLogic 
@@ -236,7 +312,6 @@ export default function TeamPageUI(props){
                                             return acc;
                                         },[])
 
-                                        console.log(groupedSchedule);
                                     return(
                                         groupedSchedule.map((data,index)=>(
                                             <>
@@ -249,7 +324,13 @@ export default function TeamPageUI(props){
                                             {data.details.map((d,i) => (
                                                 <TeamPage__Section__PersonalSchedule__Section_detailSc>
                                                     <>• {d.detail_name} ({d.detail_status})</>
-                                                {(data.assignee_id === props.userId)&& <TeamPage__Header__Left__Menu><VerticalDots></VerticalDots></TeamPage__Header__Left__Menu>}
+                                                {(data.assignee_id === props.userId)&& <TeamPage__Header__Left__Menu
+                                                    onClick={() =>{
+                                                        props.setPersonalId(d.personal_schedule_id);
+                                                        props.setChangedPName(d.detail_name);
+                                                        setIsDBEOpen(true);
+                                                    }}
+                                                ><VerticalDots></VerticalDots></TeamPage__Header__Left__Menu>}
                                                 </TeamPage__Section__PersonalSchedule__Section_detailSc>                                                                                        ))}
                                             </>
                                         ))

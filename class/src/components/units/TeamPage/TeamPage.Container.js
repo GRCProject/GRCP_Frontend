@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import TeamPageUI from "./TeamPage.Presenter";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/utils/AuthContext";
-import { createPersonalSchedule, getTeamHierarchicalSchedules, getTeamSchedules } from "@/utils/ScheduleManager";
+import { createPersonalSchedule, deletePersonalSchedule, deleteTeamSchedule, getTeamHierarchicalSchedules, getTeamSchedules, updatePersonalSchedule } from "@/utils/ScheduleManager";
 import { createTeamSchedule } from "@/utils/ScheduleManager";
 import { getTeamDetail } from "@/utils/TeamManager";
 
@@ -30,6 +30,12 @@ export default function TeamPageLogic(){
     const [curSchedule, setCurSchedule] = useState("");
     //유저 아이디
     const [userId, setUserId] = useState("");
+    //수정용 세부 일정 아이디
+    const [personalId, setPersonalId] = useState("");
+    //수정된 세부 일정 이름
+    const [changedPName,setChangedPName] = useState("");
+    //수정된 세부 일정 상태
+    const [changedPState, setChangedPState] = useState("");
 
     useEffect(() => {
         if(token && !loading && teamId){
@@ -41,11 +47,20 @@ export default function TeamPageLogic(){
         }
     },[token,loading, teamId, user]);
 
+
     const onChangeScheduleName = (e) => (setScheduleName(e.target.value));
-    const onChangeStartDate = (e) => (setStartDate(e.target.value));
-    const onChangeEndDate = (e) => (setEndDate(e.target.value))
+    const onChangeStartDate = (e) => {
+        // setStartDate(e.target.value)
+        setStartDate(e);
+    };
+    const onChangeEndDate = (e) => {
+        // setEndDate(e.target.value)
+        setEndDate(e);
+    }
     const onChangeDSName = (e) => (setDSName(e.target.value));
     const onChangeSelectedSchedule = (e) => (setSelectedSchedule(e.target.value));
+    const onChangeChangedPName = (e) => (setChangedPName(e.target.value)); 
+    const onChangeChangedPState = (e) => (setChangedPState(e.target.value));
 
     const fetchTeamMember = () => {
         try{
@@ -115,6 +130,16 @@ export default function TeamPageLogic(){
                 setStartDate("");
                 setEndDate("");
                 fetchTeamSchedule();
+                location.reload();
+        }catch(error){
+            console.error(error);
+        }
+    }
+
+    const onDeleteTeamSchedule = () => {
+        try{
+            deleteTeamSchedule(curSchedule, token);
+            location.reload();
         }catch(error){
             console.error(error);
         }
@@ -129,6 +154,36 @@ export default function TeamPageLogic(){
         }
     }
 
+    const onDeletePersonalSchedule = () =>{
+        try{
+            deletePersonalSchedule(personalId, token);
+            location.reload();
+        }catch(error){
+            console.error(error);
+        }
+    }
+
+    const onUpdatePersonalSchedule = () =>{
+        try{
+            if(changedPName != ""){
+            updatePersonalSchedule(personalId, {detail_name:changedPName, detail_status:changedPState},token);
+            setChangedPName("");
+            location.reload();
+            }
+        }catch(error){
+            console.error(error);
+        }
+    }
+
+    const onQuitTeam = () =>{
+        try{
+
+
+        }catch(error){
+            console.error(error);
+        }
+    }
+
     return(
         <TeamPageUI
             teamScheduleArr = {teamScheduleArr}
@@ -138,6 +193,8 @@ export default function TeamPageLogic(){
             onChangeEndDate = {onChangeEndDate}
             onChangeDSName = {onChangeDSName}
             onChangeSelectedSchedule = {onChangeSelectedSchedule}
+            onChangeChangedPName = {onChangeChangedPName}
+            onChangeChangedPState = {onChangeChangedPState}
             scheduleName = {scheduleName}
             startDate = {startDate}
             endDate = {endDate}
@@ -147,9 +204,16 @@ export default function TeamPageLogic(){
             DSName = {DSName}
             userId = {userId}
             curSchedule = {curSchedule}
+            personalId = {personalId}
+            changedPName = {changedPName}
             setCurSchedule = {setCurSchedule}
+            setPersonalId = {setPersonalId}
+            setChangedPName = {setChangedPName}
             onCreateTeamSchedule = {onCreateTeamSchedule}
+            onDeleteTeamSchedule = {onDeleteTeamSchedule}
             onCreatePersonalSchedule = {onCreatePersonalSchedule}
+            onDeletePersonalSchedule = {onDeletePersonalSchedule}
+            onUpdatePersonalSchedule = {onUpdatePersonalSchedule}
         ></TeamPageUI>
     )
 }

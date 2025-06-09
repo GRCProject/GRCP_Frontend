@@ -1,5 +1,6 @@
 import MainContainerLogic from "@/components/commons/MainContainer/MainContainer.Container";
 import "@/styles/globals.css";
+import 'react-datepicker/dist/react-datepicker.css';
 import { AuthProvider } from "@/utils/AuthContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";

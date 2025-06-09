@@ -208,3 +208,70 @@ export const HomePage__Section__Schedule__PS = styled.div`
     display:flex;
     justify-content:space-between;
 `
+
+export const HomePage__Input = styled.input`
+    width:100%;
+    border:1px solid #d9d9d9;
+    border-radius:4px;
+    padding: 5px 12px;
+
+    font-size: 14px;
+    line-height:20px;
+` 
+
+export const HomePage__SubmitButton = styled.div`
+    width:100%;
+    padding: 5px 12px;
+
+    border-radius:4px;
+    color:white;
+    background-color:#1f883d;
+    
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:14px;
+
+    cursor: pointer;
+`
+
+export const HomePage__PersonalSchedule__BottomMenu__Container = styled.div`
+    width:100%;
+    padding: 20px 0 10px 0;
+
+    display:flex;
+    flex-direction:column;
+`
+
+export const HomePage__PersonalSchedule__BottomMenu__Menu = styled.div`
+    width:100%;
+    padding: 8px;
+
+    border-top: 1px solid #d9d9d9;
+
+    display:flex;
+    justify-content:center;
+`
+
+
+export const HomePage__DatePickerWrapper = styled.div`
+    width: 100%;
+    
+    .react-datepicker-wrapper {
+        width: 100%;
+    }
+    
+    .react-datepicker__input-container {
+        width: 100%;
+    }
+    
+    .react-datepicker__input-container input {
+        width: 100%;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        padding: 5px 12px;
+        font-size: 14px;
+        line-height: 20px;
+    }
+`;
