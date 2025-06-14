@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/utils/AuthContext";
 import { createPersonalSchedule, deletePersonalSchedule, deleteTeamSchedule, getTeamHierarchicalSchedules, getTeamSchedules, updatePersonalSchedule } from "@/utils/ScheduleManager";
 import { createTeamSchedule } from "@/utils/ScheduleManager";
-import { getTeamDetail } from "@/utils/TeamManager";
+import { deleteTeam, getTeamDetail } from "@/utils/TeamManager";
 
 export default function TeamPageLogic(){
     const router = useRouter();
@@ -119,9 +119,21 @@ export default function TeamPageLogic(){
     }
 }
 
+    // 날짜를 yyyy-MM-dd 형태로 변환하는 헬퍼 함수
+    const formatDateToString = (date) => {
+        if (!date) return "";
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+
     const onCreateTeamSchedule = () => {
+        const formattedStartDate = formatDateToString(startDate);
+        const formattedEndDate = formatDateToString(endDate);
         try{
-            createTeamSchedule({team_id:teamId, schedule_name:scheduleName, start_date:startDate, end_date:endDate},token).then(
+            createTeamSchedule({team_id:teamId, schedule_name:scheduleName, start_date:formattedStartDate, end_date:formattedEndDate},token).then(
                 (res) => {
                     console.log(res);
                 }
@@ -175,10 +187,10 @@ export default function TeamPageLogic(){
         }
     }
 
-    const onQuitTeam = () =>{
+    const onDeleteTeam = () =>{
         try{
-
-
+            deleteTeam(teamId,token);
+            router.push("/home");
         }catch(error){
             console.error(error);
         }
@@ -214,6 +226,7 @@ export default function TeamPageLogic(){
             onCreatePersonalSchedule = {onCreatePersonalSchedule}
             onDeletePersonalSchedule = {onDeletePersonalSchedule}
             onUpdatePersonalSchedule = {onUpdatePersonalSchedule}
+            onDeleteTeam = {onDeleteTeam}
         ></TeamPageUI>
     )
 }

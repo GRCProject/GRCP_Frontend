@@ -193,7 +193,11 @@ export default function TeamPageUI(props){
                     <img src = "/Image/Logo.png" alt="Logo.png"/>
                 </TeamPage__Header_Left>
                 <TeamPage__Header_Right>
-                    <TeamPage__Header__Right__User><VerticalDots></VerticalDots></TeamPage__Header__Right__User>
+                    <TeamPage__Header__Right__User
+                        onClick={() => {
+                            props.onDeleteTeam();
+                        }}
+                    ><VerticalDots></VerticalDots></TeamPage__Header__Right__User>
                 </TeamPage__Header_Right>
             </TeamPage__Header>
             <TeamPage__Section>
